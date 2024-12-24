@@ -7,7 +7,21 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Add services to the container
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -63,9 +77,14 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Inventory Management API v1");
         c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
     });
+
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+
 }
 
-//// Configure the HTTP request pipeline.
+////// Configure the HTTP request pipeline.
 //if (!app.Environment.IsDevelopment())
 //{
 //    app.UseExceptionHandler("/Home/Error");
@@ -87,8 +106,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

@@ -20,6 +20,7 @@ namespace Inventory.InventoryDbContext
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<StockAdjustment> StockAdjustment { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +38,10 @@ namespace Inventory.InventoryDbContext
 
             modelBuilder.Entity<Supplier>()
                 .HasKey(b => b.Id);
+
+            modelBuilder.Entity<StockAdjustment>()
+                .HasKey(b => b.Id);
+
 
 
 
@@ -74,6 +79,7 @@ namespace Inventory.InventoryDbContext
                 });
 
 
+
             // Configure User-Role Relationship
             modelBuilder.Entity<Product>()
                 .HasOne(u => u.Supplier) // A Product has one Supplier
@@ -83,7 +89,12 @@ namespace Inventory.InventoryDbContext
             modelBuilder.Entity<Product>()
                 .HasOne(u => u.Category) // A Product has one Category
                 .WithMany(r => r.Products) // A Category can have many Products
-                .HasForeignKey(u => u.CategoryId); 
+                .HasForeignKey(u => u.CategoryId);
+
+            modelBuilder.Entity<StockAdjustment>()
+                .HasOne(u => u.Product)
+                .WithMany(r => r.StockAdjustments)
+                .HasForeignKey(u => u.ProductId);
 
             base.OnModelCreating(modelBuilder);
         }

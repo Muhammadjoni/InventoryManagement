@@ -9,5 +9,6 @@ namespace Inventory.Repositories
         Task AddProductAsync(Product product);
         Task UpdateProductAsync(Product product);
         Task DeleteProductAsync(int id);
+        Task AdjustStockAsync(int productId, int adjustedQuantity, string reason, string adjustedBy = null);
     }
 }

@@ -60,5 +60,12 @@ namespace Inventory.Controllers
             await _productRepository.DeleteProductAsync(id);
             return NoContent();
         }
+
+        [HttpPost("{id}/adjuststock")]
+        public async Task<IActionResult> AdjustStock(int id, StockAdjustment adjustment)
+        {
+            await _productRepository.AdjustStockAsync(id, adjustment.AdjustedQuantity, adjustment.Reason, adjustment.AdjustedBy);
+            return NoContent();
+        }
     }
 }

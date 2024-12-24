@@ -12,5 +12,6 @@
         public bool InStock { get; set; }
         public bool Blocked { get; set; }
         public int Quantity { get; set; }
+        public ICollection<StockAdjustment> StockAdjustments { get; set; }
     }
 }
