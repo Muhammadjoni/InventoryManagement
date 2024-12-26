@@ -9,7 +9,7 @@ function ProductsTable() {
   ];
 
   return (
-    <div className="products-table">
+    <div className="table-container">
       <h2>Products</h2>
       <table>
         <thead>
