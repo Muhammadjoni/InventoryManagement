@@ -2,11 +2,20 @@ import React from 'react';
 import './ProductsTable.css';
 
 function ProductsTable() {
-  const products = [
-    { id: 1, name: 'Product 1', category: 'Category 1', supplier: 'Supplier 1', quantity: 100 },
-    { id: 2, name: 'Product 2', category: 'Category 2', supplier: 'Supplier 2', quantity: 200 },
-    // Add more products as needed
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="table-container">

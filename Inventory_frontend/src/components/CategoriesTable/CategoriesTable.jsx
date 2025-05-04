@@ -2,11 +2,20 @@ import React from 'react';
 import './CategoriesTable.css';
 
 function CategoriesTable() {
-  const categories = [
-    { id: 1, name: 'Category 1' },
-    { id: 2, name: 'Category 2' },
-    // Add more categories as needed
-  ];
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <div className="table-container">
